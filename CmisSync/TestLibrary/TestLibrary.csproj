@@ -45,7 +45,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\Extras\OpenDataSpaceDotCMIS\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\Extras\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -76,12 +76,6 @@
     <Compile Include="LocalFilesystemActivityGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WatcherTest.cs" />
-    <Compile Include="ChunkedStreamTest.cs" />
-    <Compile Include="SyncEventQueueTest.cs" />
-    <Compile Include="SyncEventManagerTest.cs" />
-    <Compile Include="EventTypesTest.cs" />
-    <Compile Include="DebugLoggingHandlerTest.cs" />
-    <Compile Include="FSDeletionHandlerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CmisSync.Auth\CmisSync.Auth.csproj">

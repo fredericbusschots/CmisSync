@@ -187,7 +187,7 @@ namespace CmisSync.Lib
             }
 
             // Check resulting file path length
-            string fullPath = CmisUtils.PathCombine(localDirectory, filename);
+            string fullPath = Path.Combine(localDirectory, filename);
 
             #if __COCOA__ || __MonoCS__
             // TODO Check filename length for OS X
@@ -274,24 +274,24 @@ namespace CmisSync.Lib
                 if (fileInfo.Attributes.HasFlag(FileAttributes.Hidden))
 
                 {
-                    Logger.DebugFormat("Skipping {0}: hidden file", filepath);
+                    Logger.InfoFormat("Skipping {0}: hidden file", filepath);
                     return false;
                 }
                 if (fileInfo.Attributes.HasFlag(FileAttributes.System))
                 {
-                    Logger.DebugFormat("Skipping {0}: system file", filepath);
+                    Logger.InfoFormat("Skipping {0}: system file", filepath);
                     return false;
                 }
 
                 //Check filesize
                 if (!allowBlankFiles && fileInfo.Length <= 0)
                 {
-                    Logger.DebugFormat("Skipping {0}: blank file", filepath);
+                    Logger.InfoFormat("Skipping {0}: blank file", filepath);
                     return false;
                 }
                 if (limitFilesize && fileInfo.Length > filesizeLimit)
                 {
-                    Logger.DebugFormat("Skipping {0}: file too large {1}MB", filepath, fileInfo.Length / (1024f * 1024f));
+                    Logger.InfoFormat("Skipping {0}: file too large {1}MB", filepath, fileInfo.Length / (1024f * 1024f));
                     return false;
                 }
 
@@ -312,7 +312,7 @@ namespace CmisSync.Lib
         {
             return IsFilenameWorthSyncing(localDirectory, filename) &&
                 IsDirectoryWorthSyncing(localDirectory, repoInfo) &&
-                IsFileWorthSyncing(CmisUtils.PathCombine(localDirectory, filename), repoInfo);
+                IsFileWorthSyncing(Path.Combine(localDirectory, filename), repoInfo);
         }
 
 
@@ -447,6 +447,34 @@ namespace CmisSync.Lib
                 while (true);
             }
         }
+
+
+        public static string CreateConflictFoldername(String path, String user)
+        {
+            if (!Directory.Exists(path))
+            {
+                return path;
+            }
+            else
+            {
+                string ret = String.Format("{0}_{1}-conflict-version", path, user);
+                if (!Directory.Exists(ret))
+                    return ret;
+                int index = 1;
+                do
+                {
+                    ret = String.Format("{0}_{1}-conflict-version ({2})", path, user, index.ToString());
+                    if (!Directory.Exists(ret))
+                    {
+                        return ret;
+                    }
+                    index++;
+                }
+                while (true);
+            }
+        }
+
+
 
 
         /// <summary>
@@ -604,6 +632,26 @@ namespace CmisSync.Lib
         public static string PathCombine(string localDirectory, string filename)
         {
             return localDirectory + Path.DirectorySeparatorChar + filename;
+        }
+
+
+        /// <summary>
+        /// Get the upper folder of a local path.
+        /// </summary>
+        public static string UpperFolderLocal(string localFolderPath)
+        {
+            return Path.GetFullPath(Path.Combine(localFolderPath, @".."));
+        }
+
+
+        /// <summary>
+        /// Says whether a folder contains another.
+        /// Example: FirstFolderContainsSecond("/a", "/a/b") => true
+        /// </summary>
+        public static bool FirstFolderContainsSecond(string containingFolder, string containedFolder)
+        {
+            return containedFolder.StartsWith(containingFolder)
+                && containedFolder.Length > containingFolder.Length; // False if same folder.
         }
     }
 }

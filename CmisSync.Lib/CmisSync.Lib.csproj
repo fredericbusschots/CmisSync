@@ -51,7 +51,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Extras\OpenDataSpaceDotCMIS\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\Extras\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -65,23 +65,11 @@
     <Reference Include="Mono.Posix" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChunkedStream.cs" />
     <Compile Include="Cmis\CmisProfile.cs" />
     <Compile Include="Database\DatabaseMigrationBase.cs" />
     <Compile Include="Database\DatabaseMigration.cs" />
-    <Compile Include="Events\ActiveActivitiesManager.cs" />
-    <Compile Include="Events\ConfigChangedEvent.cs" />
-    <Compile Include="Events\DebugLoggingHandler.cs" />
-    <Compile Include="Events\FileConflictEvent.cs" />
-    <Compile Include="Events\FileTransmissionEvent.cs" />
-    <Compile Include="Events\FSDeletionHandler.cs" />
-    <Compile Include="Events\FSEvent.cs" />
-    <Compile Include="Events\GenericSyncEventHandler.cs" />
-    <Compile Include="Events\ISyncEvent.cs" />
-    <Compile Include="Events\SyncEventHandler.cs" />
-    <Compile Include="Events\SyncEventManager.cs" />
-    <Compile Include="Events\SyncEventQueue.cs" />
     <Compile Include="Sync\ChangeLogThenCrawlStrategy.cs" />
+    <Compile Include="Sync\LocalComparisonStrategy.cs" />
     <Compile Include="UserNotificationListener.cs" />
     <Compile Include="Cmis\BaseException.cs" />
     <Compile Include="Database\Database.cs" />
